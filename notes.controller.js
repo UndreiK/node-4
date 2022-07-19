@@ -35,6 +35,15 @@ async function removeNote(id){
   await fs.writeFile(notesPath, JSON.stringify(newNotes))
 }
 
+async function updateNote(noteData) {
+  const notes = await getNotes()
+  const index = notes.findIndex(note => note.id===noteData.id)
+  if (index >= 0) {
+    notes[index] = {...notes[index], ...noteData}
+    await fs.writeFile(notesPath, JSON.stringify(notes))
+  }
+}
+
 module.exports={
-  addNote, printNotes, removeNote, getNotes
+  addNote, printNotes, removeNote, getNotes, updateNote
 }
